@@ -48,6 +48,27 @@ TODO
 
 TODO
 
+[![.img/f01.png](.img/f01.png)](#nolink) [![.img/f02.png](.img/f02.png)](#nolink)
+
+```{r chunk_id_turns_1}
+truth_data = read.csv("./dat/turns.csv")
+str(truth_data)
+```
+
+```{r chunk_id_turns_2}
+summary(truth_data$speed_fps)
+summary(truth_data$total_distance)
+```
+
+```{r chunk_id_turns_3}
+truth_data$label = as.factor(truth_data$label)
+```
+
+```{r chunk_id_turns_4}
+train = truth_data[truth_data$split == "train",]
+test = truth_data[truth_data$split == "test",]
+```
+
 [**Back to Top**](#table-of-contents)
 
 ---
@@ -68,6 +89,14 @@ TODO
 
 TODO
 
+```{r chunk_ml_train}
+library(randomForest)
+rf_model = randomForest(
+   label ~ .,
+   data = train[,-c(2,3,14)]
+)
+```
+
 [**Back to Top**](#table-of-contents)
 
 ---
@@ -77,6 +106,12 @@ TODO
 ## Machine Learning: Testing
 
 TODO
+
+```{r chunk_ml_test}
+prediction = predict(rf_model, newdata = test[,-c(1,2,3,14)])
+confusion_matrix = table(unlist(test[,1]), prediction)
+print(confusion_matrix)
+```
 
 [**Back to Top**](#table-of-contents)
 
@@ -92,5 +127,6 @@ TODO
 
 ---
 
-> NOTE: Must manually add footer in `README.md` for correct rendering in GitHub: `<p align="center">Copyright &copy; 2020-&infin; <a href="https://www.athitkao.com" target="_blank">Athit Kao</a>, <a href="https://www.athitkao.com/tos.html" target="_blank">Terms and Conditions</a></p>`
+> NOTE: Must manually add footer in `README.md` for correct rendering in GitHub: `<p align="center">Copyright &copy; 2021-&infin; <a href="https://www.athitkao.com" target="_blank">Athit Kao</a>, <a href="https://www.athitkao.com/tos.html" target="_blank">Terms and Conditions</a></p>`
+
 ---
