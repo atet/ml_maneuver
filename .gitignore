@@ -1,18 +1,21 @@
 # History files
-.Rhistory
-.Rapp.history
+*.Rhistory
+*.Rapp.history
 
 # Session Data files
-.RData
+*.RData
+*.rdata
+*.RDATA
 
 # User-specific files
-.Ruserdata
+*.Ruserdata
 
 # Example code in package build process
 *-Ex.R
 
 # Output files from R CMD build
-/*.tar.gz
+*.tar.gz
+*.TAR.GZ
 
 # Output files from R CMD check
 /*.Rcheck/
@@ -36,4 +39,35 @@ vignettes/*.pdf
 *.knit.md
 
 # R Environment Variables
-.Renviron
+*.Renviron
+
+# Misc
+*.rds
+*.RDS
+*.csv
+*.CSV
+*.tsv
+*.TSV
+*.json
+*.JSON
+*.zip
+*.ZIP
+*.bz
+*.BZ
+*.bz2
+*.BZ2
+*.gz
+*.GZ
+*.gzip
+*.GZIP
+*.7z
+*.7Z
+*.rar
+*.RAR
+*.tar
+*.TAR
+*.tgz
+*.TGZ
+
+# Exceptions
+!turns.csv
