@@ -122,6 +122,8 @@ to the **known labels** of the truth data. Once a large collection of
 these random decision trees are made, each will vote towards a
 consensus.
 
+[![](.img/f03.png)](#nolink)
+
 The final “forest” of these random decision trees *could* be a high
 performing model that can automatically discern between the different
 classes of data.

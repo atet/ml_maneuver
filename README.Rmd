@@ -92,6 +92,8 @@ We will train a random forest algorithm to create a model that will serve as the
 
 What will happen with the random forest algorithm is that **random subsets** of the data are taken to make **decision trees** that conform to the **known labels** of the truth data. Once a large collection of these random decision trees are made, each will vote towards a consensus.
 
+[![.img/f03.png](.img/f03.png)](#nolink)
+
 The final "forest" of these random decision trees _could_ be a high performing model that can automatically discern between the different classes of data. 
 
 [**Back to Top**](#table-of-contents)
