@@ -3,7 +3,18 @@
 
 # [atet](https://github.com/atet) / [***ml\_maneuver***](https://github.com/atet/ml_maneuver#machine-learning-with-maneuvers)
 
+[![](.img/logo.jpg)](#nolink)
+
 # Machine Learning with Maneuvers
+
+**Estimated time to completion: 10 minutes**
+
+No prior programming experience necessary!
+
+-   This introduction will cover an end-to-end workflow that uses
+    machine learning to automatically make decisions
+-   We will be coding in a ready-to-use, web-based programming
+    environment
 
 ------------------------------------------------------------------------
 
@@ -12,11 +23,12 @@
 ## Table of Contents
 
 -   [Background](#background)
+-   [Setup](#setup)
 -   [Truth Data](#truth-data)
 -   [Machine Learning](#machine-learning)
     -   [Training](#training)
     -   [Testing](#testing)
-    -   [Deploying](#deploying)
+-   [Next Steps](#next-steps)
 
 ------------------------------------------------------------------------
 
@@ -25,8 +37,33 @@
 ## Background
 
 We will leverage technology that will allow computer code to learn from
-example data, then use what it has learned from the data to
-automatically distinguish between different classes of data.
+examples, then use what the code has learned from to automatically
+distinguish between different classes of new, never before seen data.
+
+The examples used are coordinates of a vehicle driving two different
+maneuvers, driving straight and making a left turn.
+
+[**Back to Top**](#table-of-contents)
+
+------------------------------------------------------------------------
+
+<a name="setup"></a>
+
+## Setup
+
+Please follow these instructions to become acquainted with the web-based
+R environment:
+<https://github.com/atet/learn/tree/master/programming#2-environment>
+
+[![](.img/f00.png)](#nolink)
+
+Type the following commands below in either the Script or Console
+portion of the web-based environment:
+
+-   If using the Script section, you will have to copy over all the code
+    and run all lines at once
+-   If using the Console section, you will have to copy over and run one
+    line of code at a time
 
 [**Back to Top**](#table-of-contents)
 
@@ -36,21 +73,23 @@ automatically distinguish between different classes of data.
 
 ## Truth Data
 
-The truth data below represents data in which a human has determined
+The truth data below represents examples in which a human has determined
 whether the data are of one class or another (not left-turns
 vs. left-turns)
 
 [![](.img/f01.png)](#nolink) [![](.img/f02.png)](#nolink)
 
--   50 examples of a person driving straight (25 examples) and a person
-    making a left-turn (25 examples)
+-   There are 50 examples total of a straight driving (25 examples) and
+    left-turns (25 examples)
 -   The data points are represented by five `X` and `Y` coordinate pairs
     (in feet) that are collected at 1 Hz (once per second)
     -   The first `X`,`Y` pair is `feature_1`, `feature_2` and so on
 
 ``` r
-truth_data = read.csv("./dat/turns.csv")
-str(truth_data)
+truth_data = read.csv( # Read turns.csv directly over the internet from GitHub
+   "https://raw.githubusercontent.com/atet/ml_maneuver/main/dat/turns.csv"
+   )
+str(truth_data) # Examine structure of the data
 ```
 
     ## 'data.frame':    50 obs. of  14 variables:
@@ -73,7 +112,7 @@ Additional summary statistics of the data for travel speed (feet/s) and
 total distance traveled (feet)
 
 ``` r
-# Between 22-36 miles per hour
+# Examples are between 22-36 miles per hour
 summary(truth_data$speed_fps)
 ```
 
@@ -94,10 +133,10 @@ NOTE: Must convert the label number to factor (`0` = not left-turn, `1`
 truth_data$label = as.factor(truth_data$label)
 ```
 
--   We will train the computer code on 40/50 examples (20 of each non
-    left-turn and left-turn)
+-   We will train the computer code on 40/50 examples (20 each of non
+    left-turns and left-turns)
 -   Additionally, 10/50 examples are reserved for later testing of the
-    machine learned model (5 of each non left-turn and left-turn)
+    machine learned model (5 each of non left-turns and left-turns)
 
 ``` r
 train = truth_data[truth_data$split == "train",]
@@ -113,8 +152,8 @@ test = truth_data[truth_data$split == "test",]
 ## Machine Learning
 
 We will train a random forest algorithm to create a model that will
-serve as the classifier to automatically distinguish future, unforeseen
-examples of not left-turns and left-turns.
+serve as the classifier to automatically distinguish future examples of
+not left-turns and left-turns.
 
 What will happen with the random forest algorithm is that **random
 subsets** of the data are taken to make **decision trees** that conform
@@ -136,13 +175,14 @@ classes of data.
 
 ## Machine Learning: Training
 
-Random forest parameters:
+Random forest parameters (default settings):
 
 -   500 decisions trees generated
--   Random sampling of 26/40 training samples (\~63%) with replacement
--   Random sampling of 3/10 variables with replacement
+-   Random sampling of \~63% training samples (26/40) with replacement
+-   Random sampling of 3 (of 10) variables with replacement
 
 ``` r
+# install.packages("randomForest") # Must install this package if not using web-based R
 library(randomForest) # randomForest version 4.6-14
 rf_model = randomForest(
    label ~ .,
@@ -206,24 +246,30 @@ print(confusion_matrix)
     ##   0 5 0
     ##   1 0 5
 
+***All five not left-turns (class `0`) were correctly identified as such
+(no false positives) and all five left-turns (class `1`) were correctly
+identified as such (no false negatives)!***
+
 [**Back to Top**](#table-of-contents)
 
 ------------------------------------------------------------------------
 
-<a name="deploying"></a>
+<a name="next-steps"></a>
 
-## Machine Learning: Deploying
+## Next Steps
 
-As far as deploying this model as a production-ready algorithm, more
-exploration may be required.
+### Congratulations!!!
 
--   *Are all of the variables truly important?* Evaluate variable
-    importance.
--   *Does the model performance meet your needs?* Tune parameters.
--   *Did you train on enough data?* Get more data.
+You have created a functioning model that can distinguish between two
+different driving maneuvers but much more can be done:
 
-**There are many options to move forward to improve your machine learned
-models.**
+-   Learn a programming language: [Introduction to
+    Programming](https://github.com/atet/learn/blob/master/programming/README.md#atet--learn--programming)
+-   Dive deeper into machine learning:
+    -   edX: <https://www.edx.org/learn/machine-learning>
+    -   Codecademy: <https://www.codecademy.com/learn/machine-learning>
+    -   Coursera: <https://www.coursera.org/learn/machine-learning>
+    -   Udemy: <https://www.udemy.com/topic/machine-learning/>
 
 [**Back to Top**](#table-of-contents)
 
